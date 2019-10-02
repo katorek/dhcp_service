@@ -14,8 +14,25 @@ struct dhcp_msg* receivePacketDHCP(int sockDesc) {
 
     return msg;
 }
+void sendPacketDHCP(enum dhcp_msg_type type, int sock, struct dhcp_msg* message) {
+    printf("Sending: %s\n", type);
 
-// void sendPacketDHCP(enum dhcp_msg_type type, int sock, struct dhcp_msg* msg) {
-//     struct sockaddr_in serverAddr;
-//     ;
-// }
+    struct sockaddr_in serverAddr;
+    // headers init todo
+    
+    memset(&serverAddr, 0, sizeof(serverAddr));
+    serverAddr.sin_family = AF_INET;
+    if(type == DHCP_IACK) {
+      serverAddr.sin_addr.s_addr = message->hdr.yiaddr;      
+    } else if (type == DHCP_REQUEST && message->hdr.ciaddr != 0) {
+      serverAddr.sin_addr.s_addr = message->hdr.ciaddr;
+    } else {
+      serverAddr.sin_addr.s_addr = inet_addr("255.255.255.255");
+    }
+
+    serverAddr.sin_port = htons(68);
+
+    if(sendto(sock, message, sizeof(*message), 0, (struct sockaddr *) &serverAddr, sizeof(serverAddr)) < 0) {
+      error_message("dhcpPackerOperations.sendPacketDHCP(): Send packet failed");
+    }
+}

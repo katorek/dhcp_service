@@ -12,6 +12,11 @@ int main(int argc, char const *argv[]) {
 
         switch (message->option[2]) {
             case DHCP_INFORM:
+                if (message -> hdr.op !=0 ){
+                    info_message("Received DHCP_INFORM");
+                    sendPacketDHCP(DHCP_IACK, sockDesc, message);
+                    printf("Send DHCP_ACK\n");
+                }
             break;
             
             case DHCP_RELEASE:
