@@ -9,6 +9,11 @@
 
     #define IP_POOL_START "192.168.56.10"
     #define IP_POOL_END "192.168.56.20"
+    // subnt mast 255.255.255.0
+    #define SUBNET_1 0xff
+    #define SUBNET_2 0xff
+    #define SUBNET_3 0xff
+    #define SUBNET_4 0x00
 
     #define LEASE_FILENAME "dhcp.lease"
 

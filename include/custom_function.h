@@ -25,6 +25,8 @@ int checkAvailableHost (char* hostIP);
 
 int createSocketBC();
 
+struct in_addr getMyIpAddr();
+
 struct dhcp_msg* receivePacketDHCP(int sockDesc);
 void sendPacketDHCP(enum dhcp_msg_type type, int sock, struct dhcp_msg* message);
 
