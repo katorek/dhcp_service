@@ -25,13 +25,33 @@ int main(int argc, char const *argv[]) {
                 addr.s_addr = message -> hdr.ciaddr;
                 char* ipStr = inet_ntoa(addr);
 
-
+                // todo remove from list
             break;
 
             case DHCP_DISCOVER:
+                info_message("Received DHCP_DISCOVER");
+
+                if((message->hdr.yiaddr = getIPForClient())) {
+                    sendPacketDHCP(DHCP_OFFER, sockDesc, message);
+                } else {
+                    error_message("IP pool error. All IP are used!");
+                }
             break;
 
             case DHCP_REQUEST:
+                info_message("Received DHCP_REQUEST");
+
+                if(message-> hdr.ciaddr != 0) {
+                    addr.s_addr = message->hdr.yiaddr = message -> hdr.ciaddr;
+                    printf("Renew IP: %s\n", inet_ntoa(addr));
+                    // todo remove ip from lease list
+                } else {
+                    addr.s_addr = message -> hdr.yiaddr = getIPForClient();
+                    printf("Allocated IP: %s\n", inet_ntoa(addr));
+                }
+
+                // todo write ips to list
+                sendPacketDHCP(DHCP_ACK, sockDesc, message);
             break;
         }
         
