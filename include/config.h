@@ -1,9 +1,11 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
-    // Time max val 255 in 0x00 format (10min (600sec) == 0x0258)
-    #define TOTAL_TIME_1 0x00
-    #define TOTAL_TIME_0 0x28
+    // Time max val 255 in 0x00 format (1 hour = 3600 sec)
+    #define TOTAL_TIME_3 0x00
+    #define TOTAL_TIME_2 0x00
+    #define TOTAL_TIME_1 0x0e
+    #define TOTAL_TIME_0 0x10
 
     #define USED_INTERFACE "vboxnet0"
 

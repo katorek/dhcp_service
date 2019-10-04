@@ -15,10 +15,10 @@ struct dhcp_msg* receivePacketDHCP(int sockDesc) {
     return msg;
 }
 void sendPacketDHCP(enum dhcp_msg_type type, int sock, struct dhcp_msg* message) {
-    printf("Sending: %s\n", type);
+    printf("Sending: %d\n", type);
 
     struct sockaddr_in serverAddr;
-    // headers init todo
+    initPacketHeader(message, type);
     
     memset(&serverAddr, 0, sizeof(serverAddr));
     serverAddr.sin_family = AF_INET;
