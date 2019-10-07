@@ -2,3 +2,4 @@
 dhcp_service
 dhcp.lease
 *.o
+*.sh
