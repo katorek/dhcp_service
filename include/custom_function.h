@@ -22,6 +22,8 @@
 #include "custom_types.h"
 #include "config.h"
 
+void printMAC(struct dhcp_msg* packet);
+
 int checkAvailableHost (char* hostIP);
 
 int createSocketBC();

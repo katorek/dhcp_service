@@ -40,3 +40,20 @@ uint32_t getIPForClient() {
 	
 	return 0;
 }
+
+void printMAC(struct dhcp_msg* packet) {
+	struct dhcp_header header = packet->hdr;
+
+	char mac[30];
+
+	sprintf(mac, "%.2x:%.2x:%.2x:%.2x:%.2x:%.2x", 
+        header.chaddr[0], 
+        header.chaddr[1], 
+        header.chaddr[2], 
+        header.chaddr[3], 
+        header.chaddr[4], 
+        header.chaddr[5]
+    );
+
+	printf("MAC [%s]\n", mac);
+}

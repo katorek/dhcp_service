@@ -10,11 +10,13 @@ int main(int argc, char const *argv[]) {
 
     while(1) {
        message = receivePacketDHCP(sockDesc);
+       
 
         switch (message->option[2]) {
             case DHCP_INFORM:
                 if (message -> hdr.op !=0 ){
                     info_message("Received DHCP_INFORM");
+                    printMAC(message);
                     sendPacketDHCP(DHCP_IACK, sockDesc, message);
                     printf("Send DHCP_ACK\n");
                 }
@@ -22,6 +24,7 @@ int main(int argc, char const *argv[]) {
             
             case DHCP_RELEASE:
                 info_message("Received DHCP_RELEASE");
+                printMAC(message);
 
                 addr.s_addr = message -> hdr.ciaddr;
                 char* ipStr = inet_ntoa(addr);
@@ -33,6 +36,7 @@ int main(int argc, char const *argv[]) {
 
             case DHCP_DISCOVER:
                 info_message("Received DHCP_DISCOVER");
+                printMAC(message);
 
                 if((message->hdr.yiaddr = getIPForClient())) {
                     sendPacketDHCP(DHCP_OFFER, sockDesc, message);
@@ -43,6 +47,7 @@ int main(int argc, char const *argv[]) {
 
             case DHCP_REQUEST:
                 info_message("Received DHCP_REQUEST");
+                printMAC(message);
 
                 if(message-> hdr.ciaddr != 0) {
                     addr.s_addr = message->hdr.yiaddr = message -> hdr.ciaddr;
