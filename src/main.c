@@ -8,7 +8,7 @@ int main(int argc, char const *argv[]) {
     struct in_addr addr;
     info_message("Start dhcp service");
 
-    while(0) {
+    while(1) {
        message = receivePacketDHCP(sockDesc);
 
         switch (message->option[2]) {
