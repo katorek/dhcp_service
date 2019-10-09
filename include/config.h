@@ -16,6 +16,11 @@
     #define SUBNET_2 0xff
     #define SUBNET_3 0xff
     #define SUBNET_4 0x00
+    
+    #define SERVER_ID_1 0x0a
+    #define SERVER_ID_2 0x0b
+    #define SERVER_ID_3 0x01
+    #define SERVER_ID_4 0x01
 
     #define LEASE_FILENAME "dhcp.lease"
 

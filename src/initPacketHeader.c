@@ -66,12 +66,12 @@ void setMessageType(struct dhcp_msg *packet, int type) { // MessageType '53'
 
 void setDHCPServerIdentifier(struct dhcp_msg *packet) { // DHCP Server Identifier '54'
     packet->option[length]   = 0x36;
-    packet->option[length+1] = 0x36;
+    packet->option[length+1] = 0x04;
     // 192.168.56.1
-    packet->option[length+2] = 0xc0;
-    packet->option[length+3] = 0xa8;
-    packet->option[length+4] = 0x38;
-    packet->option[length+5] = 0x01;
+    packet->option[length+2] = SERVER_ID_1;
+    packet->option[length+3] = SERVER_ID_2;
+    packet->option[length+4] = SERVER_ID_3;
+    packet->option[length+5] = SERVER_ID_4;
 
     length += 6;
 }
