@@ -7,7 +7,7 @@
     #define TOTAL_TIME_1 0x0e
     #define TOTAL_TIME_0 0x10
 
-    #define USED_INTERFACE "vboxnet0"
+    #define USED_INTERFACE "wlp2s0"
 
     #define IP_POOL_START "192.168.56.10"
     #define IP_POOL_END "192.168.56.20"

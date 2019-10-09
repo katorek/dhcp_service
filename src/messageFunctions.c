@@ -26,5 +26,6 @@ void info_message(char* message)
 
 void error_message(char* message)
 {
+    if(errno != 0) printf("\E[3%dm%s\E[3%dm\n", Red, strerror(errno), Default);
     printf("\E[3%dm%s\E[3%dm\n", Red, message, Default);
 }

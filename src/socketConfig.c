@@ -28,6 +28,14 @@ int createSocketBC() {
 
 }
 
+char *my_itoa(char *dest, int i) {
+  sprintf(dest, "%d", i);
+  return dest;
+}
+
+#define ITOA(n) my_itoa((char [41]) { 0 }, (n) )
+
+
 void bindSocketOnInterface(int sockDesc) {
     struct ifreq ifr;
     strcpy(ifr.ifr_name, USED_INTERFACE);

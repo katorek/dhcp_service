@@ -17,6 +17,7 @@
 #include <net/if.h>
 #include <bits/ioctls.h>      // defines values for argument "request" of ioctl.
 #include <time.h>
+#include <errno.h>
 
 #include "custom_types.h"
 #include "config.h"

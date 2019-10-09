@@ -1,6 +1,7 @@
 #include "custom_function.h"
 
 int main(int argc, char const *argv[]) {
+    errno = 0;
     int sockDesc = createSocketBC();
 
     struct dhcp_msg *message;
@@ -25,7 +26,9 @@ int main(int argc, char const *argv[]) {
                 addr.s_addr = message -> hdr.ciaddr;
                 char* ipStr = inet_ntoa(addr);
 
-                // todo remove from list
+                if(removeIpFromLeaseList(ipStr)) {
+                    printf("%s removed from lease list\n", ipStr);
+                }
             break;
 
             case DHCP_DISCOVER:
@@ -44,13 +47,12 @@ int main(int argc, char const *argv[]) {
                 if(message-> hdr.ciaddr != 0) {
                     addr.s_addr = message->hdr.yiaddr = message -> hdr.ciaddr;
                     printf("Renew IP: %s\n", inet_ntoa(addr));
-                    // todo remove ip from lease list
+                    removeIpFromLeaseList(inet_ntoa(addr));
                 } else {
                     addr.s_addr = message -> hdr.yiaddr = getIPForClient();
                     printf("Allocated IP: %s\n", inet_ntoa(addr));
                 }
-
-                // todo write ips to list
+                writeIpLease(getLeaseDataFromDhcpHeader(message->hdr));
                 sendPacketDHCP(DHCP_ACK, sockDesc, message);
             break;
         }

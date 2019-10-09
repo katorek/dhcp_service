@@ -8,3 +8,8 @@ all: $(SRCS)
 
 clean:
 	rm -rf dhcp_service
+rmtest:
+	rm -rf test
+	
+# test: rmtest include/custom_types.h include/custom_function.h src/checkAvaiableHost.c
+	# gcc include/custom_types.h include/custom_function.h src/checkAvaiableHost.c -o test

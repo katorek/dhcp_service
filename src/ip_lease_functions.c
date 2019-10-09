@@ -94,3 +94,57 @@ int checkBusyIp(char *ip) {
     }
     return 0;
 }
+
+int removeIpFromLeaseList(char* ip) {
+    readStandardIpLeaseList();
+    if(ipLeaseListSize == 0) {
+        return 1;
+    }
+
+    FILE* fp;
+
+    if(!(fp = fopen(LEASE_FILENAME, "w+"))) {
+        error_message("removeIpFromLeaseList(): Error open file for write");
+        return 0;
+    }
+
+    time_t t = time(NULL);
+
+    for (int i = 0; i < ipLeaseListSize; i++) {
+        if(strcmp(ip, ipLeaseList[i]->ipaddr)) {
+            sprintf(ipLeaseList[i]->ttime, "%ld", t);
+            fprintf(fp, "%s;%s;%s\n", ipLeaseList[i]->ipaddr, ipLeaseList[i]->macaddr, ipLeaseList[i]->ttime);
+        }
+    }
+    fclose(fp);
+    freeIpLeaseList();
+
+    return 1;
+}
+
+struct lease * getLeaseDataFromDhcpHeader(struct dhcp_header header)
+{
+    struct in_addr addr;
+    struct lease* ipLease;
+    
+    ipLease = (struct lease*) malloc(sizeof(struct lease));
+    memset(ipLease, 0, sizeof(struct lease));
+
+    if (header.ciaddr != 0) {
+        addr.s_addr = header.ciaddr;
+    } else if (header.yiaddr != 0) {
+        addr.s_addr = header.yiaddr;
+    }
+
+    strcpy(ipLease->ipaddr, inet_ntoa(addr));
+    sprintf(ipLease->macaddr, "%.2x:%.2x:%.2x:%.2x:%.2x:%.2x", 
+        header.chaddr[0], 
+        header.chaddr[1], 
+        header.chaddr[2], 
+        header.chaddr[3], 
+        header.chaddr[4], 
+        header.chaddr[5]
+    );
+
+    return ipLease;
+}
