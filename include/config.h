@@ -4,8 +4,8 @@
     // Time max val 255 in 0x00 format (1 hour = 3600 sec)
     #define TOTAL_TIME_3 0x00
     #define TOTAL_TIME_2 0x00
-    #define TOTAL_TIME_1 0x0e
-    #define TOTAL_TIME_0 0x10
+    #define TOTAL_TIME_1 0x00
+    #define TOTAL_TIME_0 0x78
 
     #define USED_INTERFACE "wlp2s0"
 

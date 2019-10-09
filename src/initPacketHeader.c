@@ -59,7 +59,7 @@ void setIPLeaseTime(struct dhcp_msg *packet) // IP Address Lease Time '51'
 void setMessageType(struct dhcp_msg *packet, int type) { // MessageType '53'
     packet->option[length]   = 0x35;
     packet->option[length+1] = 0x01;
-    packet->option[length+1] = type;
+    packet->option[length+2] = type;
 
     length += 3;
 }
@@ -68,10 +68,10 @@ void setDHCPServerIdentifier(struct dhcp_msg *packet) { // DHCP Server Identifie
     packet->option[length]   = 0x36;
     packet->option[length+1] = 0x36;
     // 192.168.56.1
-    packet->option[length+1] = 0xc0;
-    packet->option[length+1] = 0xa8;
-    packet->option[length+1] = 0x38;
-    packet->option[length+1] = 0x01;
+    packet->option[length+2] = 0xc0;
+    packet->option[length+3] = 0xa8;
+    packet->option[length+4] = 0x38;
+    packet->option[length+5] = 0x01;
 
     length += 6;
 }
