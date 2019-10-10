@@ -49,7 +49,7 @@ void setIp(int sfd, char* ip) {
 }
 
 void checkIfServerIpIsConfigured(int sockDesc) {
-    if(serverIpConfigured < 0) setIp(sockDesc, SERVER_IP);
+    // if(serverIpConfigured < 0) setIp(sockDesc, SERVER_IP);
 }
 
 void prepareServer(int sockDesc) {
