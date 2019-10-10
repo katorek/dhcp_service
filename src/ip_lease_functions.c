@@ -15,7 +15,7 @@ int readIpLease(struct lease*** _ipLeaseList, int* countIp) {
             memset(str, 0 , sizeof(str));
 
             if((fgets(str, 1024, fp) != 0) && (strlen(str) > 16)){
-                printf("\t\"%s\"\n", str);
+                // printf("\t\"%s\"\n", str);
                 ipLease = (struct lease*) malloc(sizeof(struct lease));
                 memset(ipLease, 0 , sizeof(struct lease));
                 strcpy(ipLease -> ipaddr, strtok(str, ";"));
@@ -27,8 +27,6 @@ int readIpLease(struct lease*** _ipLeaseList, int* countIp) {
             }
         }
     }
-
-    printf("readIpLease_%d\n", count);
 
     fclose(fp);
     *_ipLeaseList = (struct lease**) malloc(sizeof(struct lease) * count);
