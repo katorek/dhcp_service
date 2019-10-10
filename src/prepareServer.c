@@ -13,6 +13,8 @@ int serverIpConfigured() {
 	struct ifreq ifr;
 
 	if ((sock = socket(AF_INET, SOCK_DGRAM, 0)) == -1) {
+        error_message("serverIpConfigured(): ");
+        close(sock);
 		return -1;
 	}
 
@@ -20,12 +22,15 @@ int serverIpConfigured() {
 	ifr.ifr_name[16 - 1] = 0;
 
 	if (ioctl(sock, SIOCGIFADDR, &ifr) < 0) {
+        error_message("serverIpConfigured(): IP not configured");
+        close(sock);
         return -1;
 	}
     return 0;
 }
 
 void setIp(int sfd, char* ip) {
+    info_message("Setting IP");
     // int sfd;
     struct ifreq ifr;
     struct sockaddr_in* sin;
