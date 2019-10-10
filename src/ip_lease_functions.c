@@ -9,6 +9,7 @@ int readIpLease(struct lease*** _ipLeaseList, int* countIp) {
     int count = 0;
     struct lease * ipLeaseListTmp[40];
     struct lease* ipLease;
+    printf("readIpLease\n");
 
     if((fp = fopen(LEASE_FILENAME, "r+"))) {
         while (feof(fp)) {
@@ -27,6 +28,8 @@ int readIpLease(struct lease*** _ipLeaseList, int* countIp) {
             }
         }
     }
+
+    printf("readIpLease_%d\n", count);
 
     fclose(fp);
     *_ipLeaseList = (struct lease**) malloc(sizeof(struct lease) * count);
