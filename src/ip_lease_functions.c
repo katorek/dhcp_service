@@ -12,7 +12,9 @@ int readIpLease(struct lease*** _ipLeaseList, int* countIp) {
     printf("readIpLease\n");
 
     if((fp = fopen(LEASE_FILENAME, "r+"))) {
+        printf("\t2\n");
         while (feof(fp)) {
+            printf("\twhile\n");
             memset(str, 0 , sizeof(str));
 
             if((fgets(str, 1024, fp) != 0) && (strlen(str) > 16)){
