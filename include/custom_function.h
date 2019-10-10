@@ -18,10 +18,12 @@
 #include <bits/ioctls.h>      // defines values for argument "request" of ioctl.
 #include <time.h>
 #include <errno.h>
+#include <net/route.h> 
 
 #include "custom_types.h"
 #include "config.h"
 
+void prepareServer(int sockDesc);
 void printMAC(struct dhcp_msg* packet);
 
 int checkAvailableHost (char* hostIP);

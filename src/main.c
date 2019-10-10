@@ -1,20 +1,13 @@
 #include "custom_function.h"
 
-void createFileIfNotExists() {
-   info_message("Creating file if not exists for lease info");
-   FILE *p;
-   p = fopen(LEASE_FILENAME, "rb+");
-   if( p == NULL) p = fopen(LEASE_FILENAME, "wb");
-   close(p);
-}
-
 int main(int argc, char const *argv[]) {
     errno = 0;
     int sockDesc = createSocketBC();
 
     struct dhcp_msg *message;
     struct in_addr addr;
-    createFileIfNotExists();
+    prepareServer(sockDesc);
+    
     info_message("Start dhcp service");
 
 
