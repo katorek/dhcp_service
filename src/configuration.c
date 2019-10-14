@@ -84,5 +84,6 @@ void initSettings() {
     initSubnet();
     initDNSs();
     initServerIp();
+    printSettings();
 }
 
