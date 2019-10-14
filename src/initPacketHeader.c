@@ -45,16 +45,14 @@ int* getServerIpArr() {
 void setSubnetMask(struct dhcp_msg *packet) { //Subnet Mast '1'
     packet->option[length]   = 0x01; // 1
     packet->option[length+1] = 0x04; // len
-    
     // int *ip = ipFromString(SUBNET_IP);
     int *ip = getServerMaskArr();
+    printf("setSubnetMask %d\n", *(ip+0));
 
     packet->option[length+2] = *(ip+0); 
     packet->option[length+3] = *(ip+1); 
     packet->option[length+4] = *(ip+2); 
-    packet->option[length+5] = *(ip+3); 
-
-    free(ip);
+    packet->option[length+5] = *(ip+3);
 
     length += 6;
 }
@@ -74,6 +72,7 @@ void setDNSs(struct dhcp_msg *packet) { // DNS '6'
     packet->option[length]   = 0x06;
     packet->option[length+1] = 0x08;
     // google's 8.8.8.8
+
     packet->option[length+2] = 0x08;
     packet->option[length+3] = 0x08;
     packet->option[length+4] = 0x08;
@@ -114,13 +113,12 @@ void setDHCPServerIdentifier(struct dhcp_msg *packet) { // DHCP Server Identifie
     // 192.168.56.1
     // int *ip = ipFromString(SERVER_IP);
     int *ip = getServerIpArr();
+    printf("setDHCPServerIdentifier %d\n", *(ip+0));
 
     packet->option[length+2] = *(ip + 0);
     packet->option[length+3] = *(ip + 1);
     packet->option[length+4] = *(ip + 2);
     packet->option[length+5] = *(ip + 3);
-
-    free(ip);
 
     length += 6;
 }
