@@ -11,7 +11,6 @@ int main(int argc, char const *argv[]) {
     info_message("Start dhcp service");
 
 
-
     while(1) {
        message = receivePacketDHCP(sockDesc);
        

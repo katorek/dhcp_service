@@ -3,14 +3,33 @@
 
 int length = 0;
 
+int* ipFromString(char* str){
+    int len = strlen(str);
+    static int arr[4];
+    char ip[len];
+    stpcpy(ip, str);
+
+    char* ptr = strtok(ip, ".");
+    arr[0] = strtol(ptr, (char**) NULL, 10); ptr = strtok( NULL, ".");
+    arr[1] = strtol(ptr, (char**) NULL, 10); ptr = strtok( NULL, ".");
+    arr[2] = strtol(ptr, (char**) NULL, 10); ptr = strtok( NULL, ".");
+    arr[3] = strtol(ptr, (char**) NULL, 10);
+
+
+    return arr;
+}
+
+
 void setSubnetMask(struct dhcp_msg *packet) { //Subnet Mast '1'
     packet->option[length]   = 0x01; // 1
     packet->option[length+1] = 0x04; // len
     
-    packet->option[length+2] = SUBNET_1; 
-    packet->option[length+3] = SUBNET_2; 
-    packet->option[length+4] = SUBNET_3; 
-    packet->option[length+5] = SUBNET_4; 
+    int *ip = ipFromString(SUBNET_IP);
+
+    packet->option[length+2] = *(ip+0); 
+    packet->option[length+3] = *(ip+1); 
+    packet->option[length+4] = *(ip+2); 
+    packet->option[length+5] = *(ip+3); 
 
     length += 6;
 }
