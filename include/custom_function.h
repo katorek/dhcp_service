@@ -29,7 +29,8 @@ void printMAC(struct dhcp_msg* packet);
 int checkAvailableHost (char* hostIP);
 
 int createSocketBC();
-int* ipFromString(char* ip);
+int* getServerIpArr();
+int* getServerMaskArr();
 
 struct in_addr getMyIpAddr();
 

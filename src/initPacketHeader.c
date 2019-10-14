@@ -2,6 +2,12 @@
 
 
 int length = 0;
+int maskInit = 0;
+int serverInit = 0;
+int* serverIp;
+int* serverMask;
+
+
 
 int* ipFromString(char* str){
     int len = strlen(str);
@@ -19,17 +25,36 @@ int* ipFromString(char* str){
     return arr;
 }
 
+int* getServerMaskArr() {
+    if(maskInit == 0) {
+        maskInit = 1;
+        serverMask = ipFromString(SUBNET_IP);
+    }
+    return serverMask;
+}
+
+int* getServerIpArr() {
+    if(serverInit == 0) {
+        serverInit = 1;
+        serverIp = ipFromString(SERVER_IP);
+    }
+    return serverIp;
+}
+
 
 void setSubnetMask(struct dhcp_msg *packet) { //Subnet Mast '1'
     packet->option[length]   = 0x01; // 1
     packet->option[length+1] = 0x04; // len
     
-    int *ip = ipFromString(SUBNET_IP);
+    // int *ip = ipFromString(SUBNET_IP);
+    int *ip = getServerMaskArr();
 
     packet->option[length+2] = *(ip+0); 
     packet->option[length+3] = *(ip+1); 
     packet->option[length+4] = *(ip+2); 
     packet->option[length+5] = *(ip+3); 
+
+    free(ip);
 
     length += 6;
 }
@@ -87,10 +112,15 @@ void setDHCPServerIdentifier(struct dhcp_msg *packet) { // DHCP Server Identifie
     packet->option[length]   = 0x36;
     packet->option[length+1] = 0x04;
     // 192.168.56.1
-    packet->option[length+2] = SERVER_ID_1;
-    packet->option[length+3] = SERVER_ID_2;
-    packet->option[length+4] = SERVER_ID_3;
-    packet->option[length+5] = SERVER_ID_4;
+    // int *ip = ipFromString(SERVER_IP);
+    int *ip = getServerIpArr();
+
+    packet->option[length+2] = *(ip + 0);
+    packet->option[length+3] = *(ip + 1);
+    packet->option[length+4] = *(ip + 2);
+    packet->option[length+5] = *(ip + 3);
+
+    free(ip);
 
     length += 6;
 }
