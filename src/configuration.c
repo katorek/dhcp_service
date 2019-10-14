@@ -10,7 +10,7 @@ void allocateMem() {
     settings->serverip = malloc (5 * sizeof(int));
     settings->dns1 = malloc (5 * sizeof(int));
     settings->dns2 = malloc (5 * sizeof(int));
-    info_message("Allocated memory");
+    // info_message("Allocated memory");
 }
 
 void initDNSs() {
@@ -33,7 +33,7 @@ void initDNSs() {
         ptr = strtok( NULL, ".");
     }
 
-    info_message("initDNSs");
+    // info_message("initDNSs");
 }
 
 void initSubnet() {
@@ -47,7 +47,7 @@ void initSubnet() {
         settings->subnetmask[i] = strtol(ptr, (char**) NULL, 10);
         ptr = strtok( NULL, ".");
     }
-    info_message("initSubnet");
+    // info_message("initSubnet");
 }
 
 void initServerIp() {
@@ -61,7 +61,7 @@ void initServerIp() {
         settings->serverip[i] = strtol(ptr, (char**) NULL, 10);
         ptr = strtok( NULL, ".");
     }
-    info_message("initServerIp");
+    // info_message("initServerIp");
 }
 
 void printIP(int *ip) {
@@ -87,6 +87,6 @@ void initSettings() {
     initSubnet();
     initServerIp();
     initDNSs();
-    printSettings();
+    // printSettings();
 }
 
