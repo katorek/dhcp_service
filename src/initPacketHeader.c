@@ -34,6 +34,7 @@ void initSettings() {
 
 
 int* getServerMaskArr() {
+    printf("ALA\n");
     if(settings == NULL) initSettings();
     return settings->subnetmask;
 }
@@ -48,18 +49,11 @@ void setSubnetMask(struct dhcp_msg *packet) { //Subnet Mast '1'
     packet->option[length]   = 0x01; // 1
     packet->option[length+1] = 0x04; // len
     // int *ip = ipFromString(SUBNET_IP);
-    int *ip = getServerMaskArr();
-    printf("setSubnetMask %d %d %d %d\n", 
-        *(ip+0),
-        *(ip+1),
-        *(ip+2),
-        *(ip+3)
-    );
 
-    packet->option[length+2] = *(ip+0); 
-    packet->option[length+3] = *(ip+1); 
-    packet->option[length+4] = *(ip+2); 
-    packet->option[length+5] = *(ip+3);
+    packet->option[length+2] = *(settings->subnetmask+0); 
+    packet->option[length+3] = *(settings->subnetmask+1); 
+    packet->option[length+4] = *(settings->subnetmask+2); 
+    packet->option[length+5] = *(settings->subnetmask+3);
 
     length += 6;
 }
@@ -117,20 +111,11 @@ void setMessageType(struct dhcp_msg *packet, int type) { // MessageType '53'
 void setDHCPServerIdentifier(struct dhcp_msg *packet) { // DHCP Server Identifier '54'
     packet->option[length]   = 0x36;
     packet->option[length+1] = 0x04;
-    // 192.168.56.1
-    // int *ip = ipFromString(SERVER_IP);
-    int *ip = getServerIpArr();
-    printf("setDHCPServerIdentifier %d %d %d %d\n", 
-        *(ip+0),
-        *(ip+1),
-        *(ip+2),
-        *(ip+3)
-    );
 
-    packet->option[length+2] = *(ip + 0);
-    packet->option[length+3] = *(ip + 1);
-    packet->option[length+4] = *(ip + 2);
-    packet->option[length+5] = *(ip + 3);
+    packet->option[length+2] = *(settings->serverip + 0);
+    packet->option[length+3] = *(settings->serverip + 1);
+    packet->option[length+4] = *(settings->serverip + 2);
+    packet->option[length+5] = *(settings->serverip + 3);
 
     length += 6;
 }
@@ -165,6 +150,7 @@ void setEnd(struct dhcp_msg *packet) { // End '255'
 }
 
 void initPacketHeader(struct dhcp_msg *packet, uint8_t type) {
+    if(settings == NULL) initSettings();
     length = 0;
     memset(packet->option, 0, sizeof(packet->option));
     packet->hdr.op = BOOTREPLY;
