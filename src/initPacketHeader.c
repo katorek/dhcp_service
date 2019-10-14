@@ -9,9 +9,9 @@ int* serverMask;
 
 
 
-int* ipFromString(char* str){
+int* ipFromString(char* str, int *arr){
     int len = strlen(str);
-    static int arr[4];
+    // int arr[4] = {0};
     char ip[len];
     stpcpy(ip, str);
 
@@ -28,7 +28,7 @@ int* ipFromString(char* str){
 int* getServerMaskArr() {
     if(maskInit == 0) {
         maskInit = 1;
-        serverMask = ipFromString(SUBNET_IP);
+        serverMask = ipFromString(SUBNET_IP, serverMask);
     }
     return serverMask;
 }
@@ -36,7 +36,7 @@ int* getServerMaskArr() {
 int* getServerIpArr() {
     if(serverInit == 0) {
         serverInit = 1;
-        serverIp = ipFromString(SERVER_IP);
+        serverIp = ipFromString(SERVER_IP, serverIp);
     }
     return serverIp;
 }
