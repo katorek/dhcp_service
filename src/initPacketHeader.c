@@ -10,10 +10,10 @@ void setSubnetMask(struct dhcp_msg *packet) { //Subnet Mast '1'
     packet->option[length+1] = 0x04; // len
     // int *ip = ipFromString(SUBNET_IP);
 
-    packet->option[length+2] = *(settings->subnetmask+0); 
-    packet->option[length+3] = *(settings->subnetmask+1); 
-    packet->option[length+4] = *(settings->subnetmask+2); 
-    packet->option[length+5] = *(settings->subnetmask+3);
+    packet->option[length+2] = *(settings->subnetmask + 0); 
+    packet->option[length+3] = *(settings->subnetmask + 1); 
+    packet->option[length+4] = *(settings->subnetmask + 2); 
+    packet->option[length+5] = *(settings->subnetmask + 3);
 
     length += 6;
 }
@@ -32,17 +32,16 @@ void setRouterIP(struct dhcp_msg *packet) { // Router '3'
 void setDNSs(struct dhcp_msg *packet) { // DNS '6'
     packet->option[length]   = 0x06;
     packet->option[length+1] = 0x08;
-    // google's 8.8.8.8
 
-    packet->option[length+2] = 0x08;
-    packet->option[length+3] = 0x08;
-    packet->option[length+4] = 0x08;
-    packet->option[length+5] = 0x08;
-    // google's 8.8.8.9
-    packet->option[length+6] = 0x08;
-    packet->option[length+7] = 0x08;
-    packet->option[length+8] = 0x08;
-    packet->option[length+9] = 0x09;
+    packet->option[length+2] = *(settings->dns1 + 0);
+    packet->option[length+3] = *(settings->dns1 + 1);
+    packet->option[length+4] = *(settings->dns1 + 2);
+    packet->option[length+5] = *(settings->dns1 + 3);
+
+    packet->option[length+6] = *(settings->dns2 + 0);
+    packet->option[length+7] = *(settings->dns2 + 1);
+    packet->option[length+8] = *(settings->dns2 + 2);
+    packet->option[length+9] = *(settings->dns2 + 3);
 
     length += 10;
 }
