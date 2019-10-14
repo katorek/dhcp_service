@@ -2,35 +2,8 @@
 
 
 int length = 0;
-struct settings *settings;
-
-void initSettings() {
-    printf("Init settings\n");
-    int lenMask = strlen(SUBNET_IP);
-    int lenServer = strlen(SERVER_IP);
-
-    settings = (struct settings*) malloc(sizeof(struct settings));
-    settings->subnetmask = malloc (5 * sizeof(int));
-    settings->serverip = malloc (5 * sizeof(int));
-
-    char mask[lenMask];
-    char serv[lenServer];
-
-    strcpy(mask, SUBNET_IP);
-    strcpy(serv, SERVER_IP);
-
-    char* ptr = strtok(mask, ".");
-    for (int i = 0; i < 4; i++) {
-        settings->subnetmask[i] = strtol(ptr, (char**) NULL, 10);
-        ptr = strtok( NULL, ".");
-    }
-    
-    ptr = strtok(serv, ".");
-    for (int i = 0; i < 4; i++) {
-        settings->serverip[i] = strtol(ptr, (char**) NULL, 10);
-        ptr = strtok( NULL, ".");
-    }
-}
+// struct settings *settings;
+struct settings* settings;
 
 void setSubnetMask(struct dhcp_msg *packet) { //Subnet Mast '1'
     packet->option[length]   = 0x01; // 1
@@ -137,19 +110,7 @@ void setEnd(struct dhcp_msg *packet) { // End '255'
 }
 
 void initPacketHeader(struct dhcp_msg *packet, uint8_t type) {
-    if(settings == NULL) {
-        initSettings();
-        printf("%d %d %d %d\n%d %d %d %d\n",
-        *(settings->subnetmask+0),
-        *(settings->subnetmask+1),
-        *(settings->subnetmask+2),
-        *(settings->subnetmask+3),
-        *(settings->serverip+0),
-        *(settings->serverip+1),
-        *(settings->serverip+2),
-        *(settings->serverip+3)
-    );
-    }
+    if(settings == NULL) initSettings();
     length = 0;
     memset(packet->option, 0, sizeof(packet->option));
     packet->hdr.op = BOOTREPLY;

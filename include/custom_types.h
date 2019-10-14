@@ -7,6 +7,8 @@
     {
         int *subnetmask;
         int *serverip;
+        int *dns1;
+        int *dns2;
     };
 
     struct lease

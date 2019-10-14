@@ -23,6 +23,8 @@
 #include "custom_types.h"
 #include "config.h"
 
+
+
 void prepareServer(int sockDesc);
 void printMAC(struct dhcp_msg* packet);
 
@@ -36,6 +38,8 @@ struct in_addr getMyIpAddr();
 
 struct dhcp_msg* receivePacketDHCP(int sockDesc);
 void sendPacketDHCP(enum dhcp_msg_type type, int sock, struct dhcp_msg* message);
+
+void initSettings();
 
 void initPacketHeader(struct dhcp_msg* packet, uint8_t type);
 
@@ -56,5 +60,7 @@ void error_message(char* message);
 char * allocate_strmem(int len);
 uint8_t * allocate_ustrmem(int len);
 int * allocate_intmem(int len);
+
+
 
 #endif
