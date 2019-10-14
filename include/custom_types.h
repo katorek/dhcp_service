@@ -3,6 +3,12 @@
 
     #include <stdint.h>
 
+    struct settings
+    {
+        int *subnetmask;
+        int *serverip;
+    };
+
     struct lease
     {
         char ipaddr[30];

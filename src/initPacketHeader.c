@@ -2,43 +2,45 @@
 
 
 int length = 0;
-int maskInit = 0;
-int serverInit = 0;
-int* serverIp;
-int* serverMask;
+struct settings *settings;
 
+void initSettings() {
+    printf("Init settings\n");
+    int lenMask = strlen(SUBNET_IP);
+    int lenServer = strlen(SERVER_IP);
 
+    settings = (struct settings*) malloc(sizeof(struct settings));
+    settings->subnetmask = malloc (4 * sizeof(int));
+    settings->serverip = malloc (4 * sizeof(int));
 
-int* ipFromString(char* str, int *arr){
-    int len = strlen(str);
-    // int arr[4] = {0};
-    char ip[len];
-    stpcpy(ip, str);
+    char mask[lenMask];
+    char serv[lenServer];
 
-    char* ptr = strtok(ip, ".");
-    arr[0] = strtol(ptr, (char**) NULL, 10); ptr = strtok( NULL, ".");
-    arr[1] = strtol(ptr, (char**) NULL, 10); ptr = strtok( NULL, ".");
-    arr[2] = strtol(ptr, (char**) NULL, 10); ptr = strtok( NULL, ".");
-    arr[3] = strtol(ptr, (char**) NULL, 10);
+    strcpy(mask, SUBNET_IP);
+    strcpy(serv, SERVER_IP);
 
-
-    return arr;
+    char* ptr = strtok(mask, ".");
+    for (int i = 0; i < 3; i++) {
+        settings->subnetmask[i] = strtol(ptr, (char**) NULL, 10);
+        ptr = strtok( NULL, ".");
+    }
+    
+    ptr = strtok(serv, ".");
+    for (int i = 0; i < 3; i++) {
+        settings->serverip[i] = strtol(ptr, (char**) NULL, 10);
+        ptr = strtok( NULL, ".");
+    }
 }
 
+
 int* getServerMaskArr() {
-    if(maskInit == 0) {
-        maskInit = 1;
-        serverMask = ipFromString(SUBNET_IP, serverMask);
-    }
-    return serverMask;
+    if(settings == NULL) initSettings();
+    return settings->subnetmask;
 }
 
 int* getServerIpArr() {
-    if(serverInit == 0) {
-        serverInit = 1;
-        serverIp = ipFromString(SERVER_IP, serverIp);
-    }
-    return serverIp;
+    if(settings == NULL) initSettings();
+    return settings->serverip;
 }
 
 
